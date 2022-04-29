@@ -135,7 +135,7 @@ class GetAchievement(models.Model):
         Student, on_delete=models.CASCADE, verbose_name="Студент")
     achievement = models.ForeignKey(
         Achievement, on_delete=models.CASCADE, verbose_name="Достижение")
-    issued_on_hand = models.BooleanField("Выдана студенту", blank=True)
+    issued_on_hand = models.BooleanField("Выдана студенту", default=False)
 
     def __str__(self):
         return f'{self.achievement} --> {self.student}'

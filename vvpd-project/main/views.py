@@ -58,10 +58,11 @@ class AchievementDelView(LoginRequiredMixin, TeacherPermissionsMixin, DeleteView
     success_url = reverse_lazy('achievement')
 
 
-class AchievementGetView(LoginRequiredMixin, TeacherPermissionsMixin, CreateView):
+class AchievementGetView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMessageMixin, CreateView):
     form_class = FormGetAchievement
     template_name = 'get_achievement.html'
-    success_url = reverse_lazy('achievement')
+    success_message = "Достижение '%(achievement)s' было успешно выдано '%(student)s!'"
+    success_url = reverse_lazy('get_achievement')
 
     def post(self, request, *args, **kwargs):
         form = FormGetAchievement(self.request.POST)
