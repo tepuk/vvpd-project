@@ -504,7 +504,7 @@ h1,
 
 .scrollbar {
     position: relative;
-    height: 500px;
+    height: 450px;
     overflow: auto;
 }
 
@@ -520,13 +520,20 @@ h1,
 
 .table-achievement th,
 td {
-    border: 1px solid #ddd;
+    border: .1px solid rgba(0, 0, 0, 0.063);
 }
 
 .table-achievement thead tr {
-    background: #443ea2;
-    color: #fff;
     height: 50px;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 12px;
+
+}
+
+.table-achievement tbody tr,
+td {
+    padding: 10px;
 }
 
 .select2-selection__rendered {
@@ -549,14 +556,13 @@ td {
     font-size: 16px;
     border: 1px solid #ddd;
     margin-bottom: 12px;
-    background-image: url('../img/search.png');   
+    background-image: url('../img/search.png');
     background-repeat: no-repeat;
-    background-position: 8px; 
+    background-position: 8px;
     outline: none;
 }
 
-#div_id_old_password
- {
+#div_id_old_password {
     margin-bottom: 15px;
 }
 

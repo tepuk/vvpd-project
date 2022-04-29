@@ -54,6 +54,8 @@ class Student(models.Model):
         User, verbose_name="Аккаунт", on_delete=models.CASCADE)
     group = models.ForeignKey(
         "Group", verbose_name="Группа", on_delete=models.CASCADE)
+    form_of_education = models.CharField(
+        "Форма обучения", max_length=7, choices=TYPE_FORM_OF_EDUCATIONS)
     link_vk = models.URLField("Ссылка на ВК", blank="True")
     link_gitlab = models.URLField("Ссылка на gitlab", blank="True")
 
@@ -64,8 +66,6 @@ class Student(models.Model):
 class Group(models.Model):
     name = models.CharField("Название группы", max_length=50)
     year_of_enrollment = models.IntegerField("Год зачисления")
-    form_of_education = models.CharField(
-        "Форма обучения", max_length=7, choices=TYPE_FORM_OF_EDUCATIONS)
 
     def __str__(self):
         return self.name
