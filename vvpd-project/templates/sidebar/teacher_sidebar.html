@@ -1,0 +1,61 @@
+{% load static %}
+
+{% block sidebar %}
+<div class="dashboard-nav">
+    <header>
+        <a href="" class="menu-toggle"><i class="fas fa-bars"></i></a>
+        <a href="{% url 'teacher' %}" class="brand-logo">
+            <i class="fas fa-anchor"></i>
+            <span>VVPD Project</span>
+        </a>
+    </header>
+    <nav class="dashboard-nav-list">
+        <a href="{% url 'teacher' %}" class="dashboard-nav-item"><i class="fa fa-home"></i>Главная</a>
+
+        <div class='dashboard-nav-dropdown'>
+            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-user"></i> Студенты
+            </a>
+            <div class='dashboard-nav-dropdown-menu'>
+                <a href="#" class="dashboard-nav-dropdown-item">Добавить</a>
+                <a href="#" class="dashboard-nav-dropdown-item">Просмотр</a>
+            </div>
+        </div>
+        <div class='dashboard-nav-dropdown'>
+            <a class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-users"></i>Группы</a>
+            <div class='dashboard-nav-dropdown-menu'>
+                <a href="#" class="dashboard-nav-dropdown-item">Добавить</a>
+                <a href="#" class="dashboard-nav-dropdown-item">Просмотр</a>
+            </div>
+        </div>
+        <div class='dashboard-nav-dropdown'>
+            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fa fa-book"></i>Практические
+                работы&nbsp;</a>
+            <div class='dashboard-nav-dropdown-menu'>
+                <a href="#" class="dashboard-nav-dropdown-item">Добавить</a>
+                <a href="#" class="dashboard-nav-dropdown-item">Просмотр</a>
+            </div>
+        </div>
+        <div class='dashboard-nav-dropdown'>
+            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i
+                    class="fa fa-trophy"></i>Достижения</a>
+            <div class='dashboard-nav-dropdown-menu'>
+                <a href="{% url 'achievement_add' %}" class="dashboard-nav-dropdown-item">Add</a>
+                <a href="{% url 'get_achievement' %}" class="dashboard-nav-dropdown-item">Issue</a>
+                <a href="{% url 'achievement' %}" class="dashboard-nav-dropdown-item">View</a>
+                <a href="#" class="dashboard-nav-dropdown-item">View issued</a>
+            </div>
+        </div>
+        <div class="nav-item-divider"></div>
+        <div class='dashboard-nav-dropdown'>
+            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+                <i class="fa fa-user-circle"></i>{{user.username }}
+            </a>
+            <div class='dashboard-nav-dropdown-menu'>
+                <a href="{%  url 'password-reset' %}" class="dashboard-nav-dropdown-item">Изменить пароль</a>
+                <a href="{%  url 'edit_teacher_lk' user.id %}" class="dashboard-nav-dropdown-item">Личный кабинет</a>
+            </div>
+        </div>
+        <a href="{% url 'logout' %}" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i>Выйти</a>
+    </nav>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% block sidebar %}
+{% load static %}
+<div class="dashboard-nav">
+    <header>
+        <a href="" class="menu-toggle"><i class="fas fa-bars"></i></a>
+        <a href="{% url 'student' %}" class="brand-logo"><i class="fas fa-anchor"></i><span>VVPD Project</span></a>
+    </header>
+    <nav class="dashboard-nav-list">
+        <a href="{% url 'student' %}" class="dashboard-nav-item"><i class="fa fa-home"></i>Главная</a>
+        <a href="#" class="dashboard-nav-item"><i class="fa fa-book"></i>Практические работы</a>
+        <a href="#" class="dashboard-nav-item"><i class="fa fa-trophy"></i>Мои достижения</a>
+        <div class="nav-item-divider"></div>
+        <div class='dashboard-nav-dropdown'>
+            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+                <i class="fa fa-user-circle"></i>{{user.username }}
+            </a>
+            <div class='dashboard-nav-dropdown-menu'>
+                <a href="{%  url 'password-reset' %}" class="dashboard-nav-dropdown-item">Изменить пароль</a>
+                <a href="{%  url 'edit_student_lk' user.id %}" class="dashboard-nav-dropdown-item">Личный кабинет</a>
+            </div>
+        </div>
+        <a href="{% url 'logout' %}" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i>Выйти</a>
+    </nav>
+</div>
+{% endblock %}
