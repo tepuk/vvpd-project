@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 
 from config.permissions import TeacherPermissionsMixin, StudentPermissionsMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import *
@@ -26,10 +27,11 @@ class AchievementView(LoginRequiredMixin, TeacherPermissionsMixin, ListView):
     context_object_name = 'achievements'
 
 
-class AchievementAddView(LoginRequiredMixin, TeacherPermissionsMixin, CreateView):
+class AchievementAddView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMessageMixin, CreateView):
     form_class = FormAddAchievement
     template_name = 'add_achievement.html'
-    success_url = reverse_lazy('achievement')
+    success_url = reverse_lazy('achievement_add')
+    success_message = "Достижение '%(name)s' было успешно добавленно!"
 
     def post(self, request, *args, **kwargs):
         form = FormAddAchievement(self.request.POST, self.request.FILES)
@@ -40,11 +42,14 @@ class AchievementAddView(LoginRequiredMixin, TeacherPermissionsMixin, CreateView
             return self.render_to_response({'form': form})
 
 
-class AchievementEditView(LoginRequiredMixin, TeacherPermissionsMixin, UpdateView):
+class AchievementEditView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMessageMixin, UpdateView):
     model = Achievement
     form_class = FormUpdateAchievement
     template_name = 'edit_achievement.html'
-    success_url = reverse_lazy('achievement')
+    success_message = "Достижение было успешно обновленно!"
+
+    def get_success_url(self):
+        return reverse_lazy('edit_achievement', kwargs={'pk': self.kwargs['pk']})
 
 
 class AchievementDelView(LoginRequiredMixin, TeacherPermissionsMixin, DeleteView):
@@ -67,9 +72,10 @@ class AchievementGetView(LoginRequiredMixin, TeacherPermissionsMixin, CreateView
             return self.render_to_response({'form': form})
 
 
-class UpdateStudentView(LoginRequiredMixin, StudentPermissionsMixin, UpdateView):
+class UpdateStudentView(LoginRequiredMixin, StudentPermissionsMixin, SuccessMessageMixin, UpdateView):
     model = User
     template_name = 'edit_student_lk.html'
+    success_message = "Ваш профиль успешно обновлен!"
     form_class = StudentUpdateForm
     initial = {}
 
@@ -102,19 +108,12 @@ class UpdateStudentView(LoginRequiredMixin, StudentPermissionsMixin, UpdateView)
             instance.save()
         return super().form_valid(form)
 
-    def post(self, *args, **kwargs):
-        messages.success(self.request, 'Ваш профиль успешно обновлен!')
-        return super().post(*args, **kwargs)
 
-
-class UpdateTeacherView(LoginRequiredMixin, TeacherPermissionsMixin, UpdateView):
+class UpdateTeacherView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMessageMixin, UpdateView):
     model = User
     template_name = 'edit_teacher_lk.html'
+    success_message = "Ваш профиль успешно обновлен!"
     form_class = TeacherUpdateForm
 
     def get_success_url(self):
         return reverse_lazy('edit_teacher_lk', kwargs={'pk': self.kwargs['pk']})
-
-    def post(self, *args, **kwargs):
-        messages.success(self.request, 'Ваш профиль успешно обновлен!')
-        return super().post(*args, **kwargs)

@@ -7,7 +7,17 @@
 {% block content-header %}
 <h3 class="text-center">Редактировать достижение "{{ achievement.name }}"</h3>
 {% endblock %}
+
 {% block content %}
+
+{% for message in messages %}
+<div class="container-fluid p-0">
+    <div class="alert alert-success text-center" role="alert">
+        {{ message }}
+    </div>
+</div>
+{% endfor %}
+
 <div class="col-12 col-md-6 offset-md-3">
     <form class="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -20,4 +30,15 @@
         </div>
     </form>
 </div>
+{% endblock %}
+
+{% block script %}
+<script>
+    var info_messages = document.getElementsByClassName('alert-success');
+    setTimeout(function () {
+        for (var i = 0; i < info_messages.length; i++) {
+            info_messages[i].setAttribute('style', 'display:none !important');
+        }
+    }, 3000);
+</script>
 {% endblock %}
