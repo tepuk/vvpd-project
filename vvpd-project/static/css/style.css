@@ -561,13 +561,17 @@ td {
 }
 
 #div_id_old_password {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 #div_id_new_password1 {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 #div_id_new_password2 {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.select2-selection {
+    border-color: #ced4da !important;
 }
