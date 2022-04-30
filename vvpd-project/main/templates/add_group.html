@@ -36,11 +36,6 @@
 
 {% block script %}
 <script>
-    $(document).ready(function () {
-        $('#id_student').select2();
-        $('#id_achievement').select2();
-    });
-
     var info_messages = document.getElementsByClassName('alert-success');
     setTimeout(function () {
         for (var i = 0; i < info_messages.length; i++) {
