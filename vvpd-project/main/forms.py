@@ -141,6 +141,14 @@ class GroupCreateForm(forms.ModelForm):
     class Meta:
         model = Group
         fields = '__all__'
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'placeholder': 'Название группы'
+            }),
+            'year_of_enrollment': forms.TextInput(attrs={
+                'placeholder': 'Год зачисления'
+            }),
+        }
 
 
 class WorkCreateForm(forms.ModelForm):
@@ -148,7 +156,15 @@ class WorkCreateForm(forms.ModelForm):
         model = Work
         fields = '__all__'
         widgets = {
-            'dedline': forms.DateInput(attrs={'type': 'datetime-local'}),
+            'name': forms.TextInput(attrs={
+                'placeholder': 'Название'
+            }),
+            'description': forms.Textarea(attrs={
+                'placeholder': 'Описание'
+            }),
+            'dedline': forms.DateInput(attrs={
+                'type': 'datetime-local'
+            }),
         }
 
 
