@@ -311,6 +311,7 @@ h1,
     align-items: center;
     letter-spacing: 0.02em;
     transition: ease-out 0.5s;
+    margin-top: 3px;
 }
 
 .dashboard-nav-item i {
