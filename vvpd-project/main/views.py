@@ -183,5 +183,20 @@ class StudentDetailView(LoginRequiredMixin, TeacherPermissionsMixin, DetailView)
     template_name = 'student_detail.html'
 
     def get_queryset(self):
-        queryset = User.objects.select_related('student__group').filter(user_status='student')
+        queryset = User.objects.select_related(
+            'student__group').filter(user_status='student')
         return queryset
+
+
+class GroupDetailView(LoginRequiredMixin, TeacherPermissionsMixin, DetailView):
+    template_name = 'group_detail.html'
+
+    def get_queryset(self):
+        queryset = Group.objects.all()
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        group = context['group']
+        context['students'] = Student.objects.filter(group__name=group)
+        return context

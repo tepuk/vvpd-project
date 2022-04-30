@@ -18,6 +18,8 @@ urlpatterns = [
     path('teacher/group/all/', GroupView.as_view(), name='group'),
     path('teacher/student/all/', StudentView.as_view(), name='student_view'),
     path('teacher/student/^<int:pk>/info/', StudentDetailView.as_view(), name='student_detail'),
+    path('teacher/group/^<int:pk>/info/', GroupDetailView.as_view(), name='group_detail'),
+     path('teacher/group/^<int:pk>/info/<int:pk1>', GroupDetailView.as_view(), name='student_detail'),
     path('student/id^<int:pk>/edit/', UpdateStudentView.as_view(), name="edit_student_lk"),
     path('student/', StudentListView.as_view(), name='student'),
 ]

@@ -104,8 +104,8 @@ p {
 }
 
 a {
-    font-size: inherit;
     color: inherit;
+    font-size: inherit;
     text-decoration: none;
     background-color: transparent;
 }
@@ -282,7 +282,7 @@ h1,
 }
 
 .brand-logo i {
-    color: #d2d1d1;
+    color: #ffffff;
     font-size: 27px;
     margin-right: 10px;
 }

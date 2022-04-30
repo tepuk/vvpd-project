@@ -13,7 +13,7 @@
         <thead>
             <tr>
                 <th class="text-center" width="3%" data-sort-method='none'>#</th>
-                <th class="text-center name" width="25%" data-sort-method='none'>Название</th>
+                <th class="text-center data-sort name" width="25%">Название</th>
                 <th class="text-center data-sort" width="15%">Год зачисления</td>
                 <th class="text-center" width="5%" data-sort-method='none'>Действия</th>
             </tr>
@@ -22,7 +22,7 @@
             {% for group in groups %}
             <tr>
                 <td class="text-center">{{ forloop.counter }}</td>
-                <td class="text-center name" width="25%">{{ group.name }}</td>
+                <td class="text-center name" width="25%"><a href="{% url 'group_detail' group.id %}">{{ group.name }}</a></td>
                 <td class="text-center">{{ group.year_of_enrollment }}</td>
                 <td class="text-center" width="15%">
                     <a class="update-achievement btn btn-sm btn-primary" href="#">
@@ -39,7 +39,6 @@
     <div class="error-search text-center mt-3" style="display: none;">
         <p><i class="fa fa-exclamation-circle"></i> По вашему запросу ничего не найдено</p>
     </div>
-</div>
 </div>
 {% endblock %}
 
