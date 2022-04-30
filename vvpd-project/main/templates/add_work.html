@@ -18,7 +18,7 @@
 {% endfor %}
 
 <div class="col-12 col-md-6 offset-md-3">
-    <form class="" method="post" enctype="multipart/form-data">
+    <form class="" method="post">
         {% csrf_token %}
         <div class="mb-5">
             {{ form.name|as_crispy_field }}
@@ -28,7 +28,7 @@
         <div class="d-flex justify-content-center">
             <button type="submit" class="btn btn-success">Добавить</button>
             &nbsp;
-            <a class="btn btn-secondary" href="{% url 'teacher' %}" class="">Назад</a>
+            <a class="btn btn-secondary" href="{% url 'work' %}" class="">Назад</a>
         </div>
     </form>
 </div>

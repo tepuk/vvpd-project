@@ -511,18 +511,18 @@ h1,
     display: block;
 }
 
-.table-achievement {
+.table-scrolls {
     width: 100%;
     table-layout: fixed;
     word-wrap: break-word;
 }
 
-.table-achievement th,
+.table-scrolls th,
 td {
     border: .1px solid rgba(0, 0, 0, 0.063);
 }
 
-.table-achievement thead tr {
+.table-scrolls thead tr {
     height: 50px;
     text-transform: uppercase;
     font-weight: 500;
@@ -530,7 +530,7 @@ td {
 
 }
 
-.table-achievement tbody tr,
+.table-scrolls tbody tr,
 td {
     padding: 10px;
 }

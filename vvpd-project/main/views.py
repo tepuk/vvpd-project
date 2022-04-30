@@ -159,3 +159,9 @@ class WorkCreateView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMessage
     template_name = 'add_work.html'
     success_message = 'Практическая работа успешно добавлена'
     success_url = reverse_lazy('work_add')
+
+
+class WorkView(LoginRequiredMixin, TeacherPermissionsMixin, ListView):
+    model = Work
+    template_name = 'work.html'
+    context_object_name = 'works'
