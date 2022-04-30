@@ -70,6 +70,8 @@ class AchievementGetView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMes
             form.save()
             return self.form_valid(form)
         else:
+            messages.error(
+                request, 'Данное достижение уже выданно этому студенту!')
             return self.render_to_response({'form': form})
 
 
@@ -86,7 +88,6 @@ class UpdateStudentView(LoginRequiredMixin, StudentPermissionsMixin, SuccessMess
             user__pk=self.request.user.pk).link_vk
         base_initial['link_gitlab'] = Student.objects.get(
             user__pk=self.request.user.pk).link_gitlab
-        print(base_initial)
         return base_initial
 
     def get_success_url(self):
@@ -144,3 +145,17 @@ class StudentCreateView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMess
             return self.form_valid(form)
         else:
             return self.render_to_response({'form': form, 'student_form': student_form})
+
+
+class GroupCreateView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMessageMixin, CreateView):
+    form_class = GroupCreateForm
+    template_name = 'add_group.html'
+    success_message = 'Группа успешно добавлена'
+    success_url = reverse_lazy('group_add')
+
+
+class WorkCreateView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMessageMixin, CreateView):
+    form_class = WorkCreateForm
+    template_name = 'add_work.html'
+    success_message = 'Практическая работа успешно добавлена'
+    success_url = reverse_lazy('work_add')

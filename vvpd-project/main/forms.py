@@ -134,10 +134,22 @@ class UserCreateForm(forms.ModelForm):
 class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
-        exclude = (
-            'user', 'link_vk', 'link_gitlab'
-        )
+        exclude = ('user', 'link_vk', 'link_gitlab')
 
 
-StudentFormSet = modelformset_factory(
-    Student, form=StudentForm, max_num=1, extra=1)
+class GroupCreateForm(forms.ModelForm):
+    class Meta:
+        model = Group
+        fields = '__all__'
+
+
+class WorkCreateForm(forms.ModelForm):
+    class Meta:
+        model = Work
+        fields = '__all__'
+        widgets = {
+            'dedline': forms.DateInput(attrs={'type': 'datetime-local'}),
+        }
+
+
+StudentFormSet = modelformset_factory(Student, form=StudentForm, max_num=1, extra=1)

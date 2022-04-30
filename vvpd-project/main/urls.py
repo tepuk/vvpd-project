@@ -11,7 +11,9 @@ urlpatterns = [
     path('teacher/achievement/get', AchievementGetView.as_view(), name='get_achievement'),
     path('teacher/achievement/id^<int:pk>/edit/', AchievementEditView.as_view(), name='edit_achievement'),
     path('teacher/achievement/id^<int:pk>/del/', AchievementDelView.as_view(), name='del_achievement'),
-    path('student/id^<int:pk>/edit/', UpdateStudentView.as_view(), name="edit_student_lk"),
     path('teacher/student/add/', StudentCreateView.as_view(), name='student_add'),
+    path('teacher/group/add/', GroupCreateView.as_view(), name='group_add'),
+    path('teacher/work/add/', WorkCreateView.as_view(), name='work_add'),
+    path('student/id^<int:pk>/edit/', UpdateStudentView.as_view(), name="edit_student_lk"),
     path('student/', StudentListView.as_view(), name='student'),
 ]

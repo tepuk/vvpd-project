@@ -203,7 +203,7 @@ h1,
     -webkit-flex-grow: 2;
     -ms-flex-positive: 2;
     flex-grow: 2;
-    padding: 25px;
+    padding: 25px 50px;
 }
 
 .dashboard-nav {

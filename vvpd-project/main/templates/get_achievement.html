@@ -11,7 +11,7 @@
 
 {% for message in messages %}
 <div class="container-fluid p-0">
-    <div class="alert alert-success text-center" role="alert">
+    <div {% if message.tags %} class="alert {{ message.tags }} text-center" role="alert" {% endif %}>
         {{ message }}
     </div>
 </div>
@@ -38,11 +38,21 @@
 {% block script %}
 <script>
     $(document).ready(function () {
-        $('#id_student').select2();
-        $('#id_achievement').select2();
+        $('#id_student').select2({
+            placeholder: "",
+            width: '100%'
+        });
+        $('#id_achievement').select2({
+            placeholder: "",
+            width: '100%'
+        });
     });
 
-    var info_messages = document.getElementsByClassName('alert-success');
+    $(document).on("select2:open", () => {
+        document.querySelector(".select2-container--open .select2-search__field").focus()
+    })
+
+    var info_messages = document.getElementsByClassName('alert');
     setTimeout(function () {
         for (var i = 0; i < info_messages.length; i++) {
             info_messages[i].setAttribute('style', 'display:none !important');

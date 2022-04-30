@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import RegexValidator
 from django.db import models
 from django.urls import reverse_lazy
 from PIL import Image
@@ -10,6 +11,7 @@ TYPE_USERS = [
 
 
 TYPE_FORM_OF_EDUCATIONS = [
+    (None, ''),
     ('очная', 'Очная'),
     ('заочная', 'Заочная')
 ]
@@ -54,7 +56,7 @@ class Student(models.Model):
     group = models.ForeignKey(
         "Group", verbose_name="Группа", on_delete=models.CASCADE)
     form_of_education = models.CharField(
-        "Форма обучения", max_length=7, choices=TYPE_FORM_OF_EDUCATIONS)
+        "Форма обучения", max_length=7, choices=TYPE_FORM_OF_EDUCATIONS, default='очная')
     link_vk = models.URLField("Ссылка на ВК", blank="True")
     link_gitlab = models.URLField("Ссылка на gitlab", blank="True")
 
@@ -63,8 +65,9 @@ class Student(models.Model):
 
 
 class Group(models.Model):
-    name = models.CharField("Название группы", max_length=50)
-    year_of_enrollment = models.IntegerField("Год зачисления")
+    name = models.CharField("Название группы", max_length=60, unique=True)
+    year_of_enrollment = models.CharField("Год зачисления", max_length=4, validators=[
+                                          RegexValidator("^[2][0-9]{3}$", message="Неверный формат ввода года")])
 
     def __str__(self):
         return self.name
@@ -75,7 +78,8 @@ class Group(models.Model):
 
 
 class Work(models.Model):
-    name = models.CharField(max_length=30, verbose_name="Название работы")
+    name = models.CharField(
+        max_length=150, verbose_name="Название работы", unique=True)
     description = models.TextField(verbose_name="Описание")
     dedline = models.DateTimeField('Дедлайн')
 
@@ -88,7 +92,7 @@ class Work(models.Model):
 
 
 class Achievement(models.Model):
-    name = models.CharField("Название достижения", max_length=100)
+    name = models.CharField("Название достижения", max_length=100, unique=True)
     description = models.TextField("Описание")
     image = models.ImageField("Изображение", upload_to="static/img/")
 
@@ -137,7 +141,10 @@ class GetAchievement(models.Model):
     issued_on_hand = models.BooleanField("Выдана студенту", default=False)
 
     def __str__(self):
-        return f'{self.achievement} --> {self.student}'
+        return f'{self.achievement} выдана {self.student}'
+
+    class Meta:
+        unique_together = ('student', 'achievement')
 
 
 class Grade(models.Model):

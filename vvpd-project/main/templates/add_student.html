@@ -20,20 +20,20 @@
 <div class="col-12 col-md-6 offset-md-3">
     <form class="" method="post">
         {% csrf_token %}
-        <div class="mb-5">
+        <div class="mb-3">
             <h3>Логин и пароль</h3>
             <hr>
             {{ form.username|as_crispy_field }}
             {{ form.password|as_crispy_field }}
         </div>
-        <div class="mb-5">
+        <div class="mb-3">
             <h3>Личные данные</h3>
             <hr>
             {{ form.last_name|as_crispy_field }}
             {{ form.first_name|as_crispy_field }}
             {{ form.middle_name|as_crispy_field }}
         </div>
-        <div class="mb-5">
+        <div class="mb-3">
             <h3>Группа и форма обучения</h3>
             <hr>
             {{ student_form.group|as_crispy_field }}
@@ -51,9 +51,15 @@
 {% block script %}
 <script>
     $(document).ready(function () {
-        $('#id_student').select2();
-        $('#id_achievement').select2();
+        $('#id_group').select2({
+            placeholder: "",
+            width: '100%',
+        });
     });
+
+    $(document).on("select2:open", () => {
+        document.querySelector(".select2-container--open .select2-search__field").focus()
+    })
 
     var info_messages = document.getElementsByClassName('alert-success');
     setTimeout(function () {
