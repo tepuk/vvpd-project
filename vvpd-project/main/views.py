@@ -5,20 +5,20 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, FormView, ListView,
-                                  TemplateView, UpdateView)
+                                  TemplateView, UpdateView, View)
 
 from .forms import *
 from .models import *
 
 
-class TeacherListView(LoginRequiredMixin, TeacherPermissionsMixin, ListView):
-    model = Teacher
-    template_name = 'teacher_lk.html'
+class TeacherListView(LoginRequiredMixin, TeacherPermissionsMixin, View):
+    def get(self, request):
+        return render(request, 'teacher_lk.html')
 
 
-class StudentListView(LoginRequiredMixin, StudentPermissionsMixin, ListView):
-    model = Student
-    template_name = 'student_lk.html'
+class StudentListView(LoginRequiredMixin, StudentPermissionsMixin, View):
+    def get(self, request):
+        return render(request, 'student_lk.html')
 
 
 class AchievementView(LoginRequiredMixin, TeacherPermissionsMixin, ListView):
@@ -171,3 +171,9 @@ class GroupView(LoginRequiredMixin, TeacherPermissionsMixin, ListView):
     model = Group
     template_name = 'group.html'
     context_object_name = 'groups'
+
+
+class StudentView(LoginRequiredMixin, TeacherPermissionsMixin, ListView):
+    model = Student
+    template_name = 'student.html'
+    context_object_name = 'students'
