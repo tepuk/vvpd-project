@@ -111,7 +111,7 @@ a {
 
 a:hover {
     color: #0458eb;
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 h1,
@@ -359,8 +359,6 @@ h1,
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     border-top: 5px solid rgba(81, 81, 81, 0.8);
-    -webkit-transform: rotate(90deg);
-    -o-transform: rotate(90deg);
 }
 
 .dashboard-nav .dashboard-nav-dropdown-toggle:after {
