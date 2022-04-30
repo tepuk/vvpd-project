@@ -77,6 +77,11 @@
     <!-- Select2 script -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+    <!-- Tablesort script -->
+    <script src="{% static 'js/tablesort.min.js' %}"></script>
+    <script src='{% static "js/tablesort.number.js" %}'></script>
+    <script src='{% static "js/tablesort.date.js" %}'></script>
+
     <script>
         const mobileScreen = window.matchMedia("(max-width: 990px )");
         $(document).ready(function () {

@@ -103,7 +103,7 @@ class UpdateStudentView(LoginRequiredMixin, StudentPermissionsMixin, SuccessMess
     def form_valid(self, form):
         link_vk = form.cleaned_data.get('link_vk', None)
         link_gitlab = form.cleaned_data.get('link_gitlab', None)
-        if link_vk and link_gitlab:
+        if link_vk or link_gitlab:
             instance = self.get_context_data().get('second_model')
             instance.link_vk = link_vk
             instance.link_gitlab = link_gitlab
@@ -165,3 +165,9 @@ class WorkView(LoginRequiredMixin, TeacherPermissionsMixin, ListView):
     model = Work
     template_name = 'work.html'
     context_object_name = 'works'
+
+
+class GroupView(LoginRequiredMixin, TeacherPermissionsMixin, ListView):
+    model = Group
+    template_name = 'group.html'
+    context_object_name = 'groups'

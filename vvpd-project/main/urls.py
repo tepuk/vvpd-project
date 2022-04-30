@@ -15,6 +15,7 @@ urlpatterns = [
     path('teacher/group/add/', GroupCreateView.as_view(), name='group_add'),
     path('teacher/work/add/', WorkCreateView.as_view(), name='work_add'),
     path('teacher/work/all/', WorkView.as_view(), name='work'),
+    path('teacher/group/all/', GroupView.as_view(), name='group'),
     path('student/id^<int:pk>/edit/', UpdateStudentView.as_view(), name="edit_student_lk"),
     path('student/', StudentListView.as_view(), name='student'),
 ]

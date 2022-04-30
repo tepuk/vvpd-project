@@ -576,3 +576,36 @@ td {
 .select2-selection {
     border-color: #ced4da !important;
 }
+
+.data-sort[role=columnheader]:not(.no-sort) {
+    cursor: pointer;
+}
+
+.data-sort[role=columnheader]:not(.no-sort):after {
+    content: '';
+    margin: 7px;
+    border-width: 0 4px 4px;
+    float: right;
+    border-style: solid;
+    border-color: #404040 transparent;
+    visibility: visible;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+.data-sort[aria-sort=ascending]:not(.no-sort):after {
+    border-bottom: none;
+    border-width: 4px 4px 0;
+}
+
+.data-sort[aria-sort]:not(.no-sort):after {
+    visibility: visible;
+    opacity: 0.4;
+}
+
+.data-sort[role=columnheader]:not(.no-sort):hover:after {
+    visibility: visible;
+    opacity: 1;
+}
