@@ -1,14 +1,14 @@
-from django.views.generic import ListView, CreateView, DeleteView, UpdateView, TemplateView, FormView
+from config.permissions import StudentPermissionsMixin, TeacherPermissionsMixin
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.contrib import messages
+from django.views.generic import (CreateView, DeleteView, FormView, ListView,
+                                  TemplateView, UpdateView)
 
-from config.permissions import TeacherPermissionsMixin, StudentPermissionsMixin
-from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.mixins import LoginRequiredMixin
-
-from .models import *
 from .forms import *
+from .models import *
 
 
 class TeacherListView(LoginRequiredMixin, TeacherPermissionsMixin, ListView):
@@ -118,3 +118,29 @@ class UpdateTeacherView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMess
 
     def get_success_url(self):
         return reverse_lazy('edit_teacher_lk', kwargs={'pk': self.kwargs['pk']})
+
+
+class StudentCreateView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMessageMixin, CreateView):
+    form_class = UserCreateForm
+    template_name = 'add_student.html'
+    success_url = reverse_lazy('student_add')
+    success_message = 'Cтудент усешно добавлен'
+
+    def get_context_data(self, **kwargs):
+        data = super(StudentCreateView, self).get_context_data(**kwargs)
+        data['student_form'] = StudentForm()
+        return data
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        student_form = StudentForm(self.request.POST)
+        if form.is_valid() and student_form.is_valid():
+            user = form.save(commit=False)
+            user.user_status = 'student'
+            student = student_form.save(commit=False)
+            student.user = user
+            user.save()
+            student.save()
+            return self.form_valid(form)
+        else:
+            return self.render_to_response({'form': form, 'student_form': student_form})

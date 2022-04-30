@@ -20,23 +20,20 @@
 <div class="col-12 col-md-6 offset-md-3">
     <form class="" method="post">
         {% csrf_token %}
-        <br>
-        <h3>Личные данные</h3>
-        <hr>
-        {{ form.last_name|as_crispy_field }}
-        <br>
-        {{ form.first_name|as_crispy_field }}
-        <br>
-        {{ form.middle_name|as_crispy_field }}
-        <br>
-        {{ form.email|as_crispy_field }}
-        <br>
-        <h3>Ссылки на профили VK и GitLab</h3>
-        <hr>
-        {{ form.link_vk|as_crispy_field }}
-        <br>
-        {{ form.link_gitlab|as_crispy_field }}
-        <br>
+        <div class="mb-5">
+            <h3>Личные данные</h3>
+            <hr>
+            {{ form.last_name|as_crispy_field }}
+            {{ form.first_name|as_crispy_field }}
+            {{ form.middle_name|as_crispy_field }}
+            {{ form.email|as_crispy_field }}
+        </div>
+        <div class="mb-5">
+            <h3>Ссылки на профили VK и GitLab</h3>
+            <hr>
+            {{ form.link_vk|as_crispy_field }}
+            {{ form.link_gitlab|as_crispy_field }}
+        </div>
         <div class="d-flex justify-content-center">
             <button type="submit" class="btn btn-success">Сохранить</button>
             &nbsp;

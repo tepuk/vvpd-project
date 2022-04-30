@@ -1,5 +1,6 @@
 from django import forms
 from django.forms.models import modelformset_factory
+
 from .models import *
 
 
@@ -60,11 +61,20 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'middle_name', 'email']
-        widgets = {'first_name': forms.TextInput(attrs={'placeholder': 'Имя'}),
-                   'last_name': forms.TextInput(attrs={'placeholder': 'Фамилия'}),
-                   'middle_name': forms.TextInput(attrs={'placeholder': 'Отчество'}),
-                   'email': forms.TextInput(attrs={'placeholder': 'E-mail'}),
-                   }
+        widgets = {
+            'first_name': forms.TextInput(attrs={
+                'placeholder': 'Имя'
+            }),
+            'last_name': forms.TextInput(attrs={
+                'placeholder': 'Фамилия'
+            }),
+            'middle_name': forms.TextInput(attrs={
+                'placeholder': 'Отчество'
+            }),
+            'email': forms.TextInput(attrs={
+                'placeholder': 'E-mail'
+            }),
+        }
 
 
 class StudentUpdateForm(forms.ModelForm):
@@ -80,3 +90,54 @@ class TeacherUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'middle_name', 'email']
+
+
+class UserCreateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = [
+            'username', 'password', 'first_name', 'last_name', 'middle_name',
+            'email']
+        widgets = {
+            'username': forms.TextInput(attrs={
+                'placeholder': 'Имя пользователя'
+            }),
+            'password': forms.PasswordInput(attrs={
+                'placeholder': 'Пароль'
+            }),
+            'first_name': forms.TextInput(attrs={
+                'placeholder': 'Имя'
+            }),
+            'last_name': forms.TextInput(attrs={
+                'placeholder': 'Фамилия'
+            }),
+            'middle_name': forms.TextInput(attrs={
+                'placeholder': 'Отчество'
+            }),
+            'email': forms.EmailInput(attrs={
+                'placeholder': 'Email'
+            }),
+        }
+
+    def save(self, commit=True):
+        user = super(UserCreateForm, self).save(commit=False)
+        user.set_password(self.cleaned_data['password'])
+        if commit:
+            user.save()
+        return user
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].help_text = None
+
+
+class StudentForm(forms.ModelForm):
+    class Meta:
+        model = Student
+        exclude = (
+            'user', 'link_vk', 'link_gitlab'
+        )
+
+
+StudentFormSet = modelformset_factory(
+    Student, form=StudentForm, max_num=1, extra=1)

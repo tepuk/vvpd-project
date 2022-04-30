@@ -1,8 +1,7 @@
-from django.urls import path
 from django.contrib.auth import views as auth_views
+from django.urls import path
 
 from .views import *
-
 
 urlpatterns = [
     path('teacher/', TeacherListView.as_view(), name='teacher'),
@@ -13,5 +12,6 @@ urlpatterns = [
     path('teacher/achievement/id^<int:pk>/edit/', AchievementEditView.as_view(), name='edit_achievement'),
     path('teacher/achievement/id^<int:pk>/del/', AchievementDelView.as_view(), name='del_achievement'),
     path('student/id^<int:pk>/edit/', UpdateStudentView.as_view(), name="edit_student_lk"),
+    path('teacher/student/add/', StudentCreateView.as_view(), name='student_add'),
     path('student/', StudentListView.as_view(), name='student'),
 ]

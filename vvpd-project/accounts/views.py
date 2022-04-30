@@ -1,10 +1,10 @@
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
-from django.views.generic import RedirectView, TemplateView
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render
-from django.contrib.auth import update_session_auth_hash
-from django.contrib import messages
+from django.urls import reverse_lazy
+from django.views.generic import RedirectView, TemplateView
 
 from .forms import PasswordChangeForm
 

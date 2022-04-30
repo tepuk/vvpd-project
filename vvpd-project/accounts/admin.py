@@ -1,9 +1,9 @@
 from django.contrib import admin
-from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import Group
+from main.models import User
 
 from .forms import UserCreationForm
-from main.models import User
 
 
 @admin.register(User)

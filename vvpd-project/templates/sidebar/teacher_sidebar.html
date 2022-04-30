@@ -11,13 +11,12 @@
     </header>
     <nav class="dashboard-nav-list">
         <a href="{% url 'teacher' %}" class="dashboard-nav-item"><i class="fa fa-home"></i>Главная</a>
-
         <div class='dashboard-nav-dropdown'>
             <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-user"></i> Студенты
             </a>
             <div class='dashboard-nav-dropdown-menu'>
-                <a href="#" class="dashboard-nav-dropdown-item">Добавить</a>
-                <a href="#" class="dashboard-nav-dropdown-item">Просмотр</a>
+                <a href="{% url 'student_add' %}" class="dashboard-nav-dropdown-item">Add</a>
+                <a href="#" class="dashboard-nav-dropdown-item">View</a>
             </div>
         </div>
         <div class='dashboard-nav-dropdown'>

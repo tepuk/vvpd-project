@@ -1,8 +1,7 @@
-from django.urls import path
 from django.contrib.auth import views as auth_views
+from django.urls import path
 
-from .views import UserTypeRedirectView, LoginUser, ChangePassword
-
+from .views import ChangePassword, LoginUser, UserTypeRedirectView
 
 urlpatterns = [
     path('', UserTypeRedirectView.as_view(), name='user_type'),

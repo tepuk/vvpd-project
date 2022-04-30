@@ -16,7 +16,7 @@
                 <th class="text-center name" width="25%">Название</th>
                 <th class="text-center">Описание</td>
                 <th class="text-center" width="20%">Изображение</th>
-                <th class="text-center" width="9%">Действия</th>
+                <th class="text-center" width="15%">Действия</th>
             </tr>
         </thead>
         <tbody>
@@ -25,8 +25,8 @@
                 <td class="text-center" width="5%">{{ forloop.counter }}</td>
                 <td class="text-center name" width="25%">{{ achievement.name }}</td>
                 <td>{{ achievement.description }}</td>
-                <td class="text-center" width="20%"><img src="{{ achievement.image.url }}"></td>
-                <td class="text-center" width="9%">
+                <td class="text-center" width="20%"><img src="{{ achievement.image.url }}" width="50%"></td>
+                <td class="text-center" width="15%">
                     <a class="update-achievement btn btn-sm btn-primary"
                         href="{% url 'edit_achievement' achievement.pk %}">
                         <span class="fa fa-edit"></span>

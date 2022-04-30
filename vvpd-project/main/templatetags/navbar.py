@@ -1,6 +1,6 @@
 from django import template
 
-from main.models import User, Teacher
+from main.models import Teacher, User
 
 register = template.Library()
 
