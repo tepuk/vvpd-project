@@ -7,17 +7,17 @@
 {% endblock %}
 
 {% block content %}
-<input type="text" class="form-control" id="search" placeholder="Поиск по названию...">
+<input type="text" class="form-control" id="search" placeholder="Поиск по ФИО...">
 <div class="table-wrapper-scroll-y scrollbar">
     <table id="student-table" class="table-scrolls">
         <thead>
             <tr>
                 <th class="text-center" width="3%" data-sort-method='none'>#</th>
-                <th class="text-center name data-sort" width="23%">ФИО</th>
+                <th class="text-center name data-sort" width="23%">ФИО <i class="fa fa-link"></i></th>
                 <th class="text-center data-sort" width="10%">Группа</td>
                 <th class="text-center data-sort" width="10%">Форма обучения</th>
-                <th class="text-center" width="10%" data-sort-method='none'>Ссылка VK</th>
-                <th class="text-center" width="10%" data-sort-method='none'>Ссылка Git</th>
+                <th class="text-center" width="10%" data-sort-method='none'>Ссылка VK <i class="fa fa-link"></i></th>
+                <th class="text-center" width="10%" data-sort-method='none'>Ссылка Git <i class="fa fa-link"></i></th>
                 <th class="text-center" width="8%" data-sort-method='none'>Действия</th>
             </tr>
         </thead>
@@ -25,7 +25,7 @@
             {% for student in students %}
             <tr>
                 <td class="text-center">{{ forloop.counter }}</td>
-                <td class="text-center name">{{ student.user.get_full_name}}</td>
+                <td class="text-center name"><a href="{% url 'student_detail' student.user.id %}">{{ student.user.get_full_name}}</a></td>
                 <td class="text-center">{{ student.group }}</td>
                 <td class="text-center">{{ student.form_of_education }}</td>
                 <td class="text-center">

@@ -104,7 +104,8 @@ p {
 }
 
 a {
-    color: #3f84fc;
+    font-size: inherit;
+    color: inherit;
     text-decoration: none;
     background-color: transparent;
 }

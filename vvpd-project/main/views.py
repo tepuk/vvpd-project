@@ -5,7 +5,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, FormView, ListView,
-                                  TemplateView, UpdateView, View)
+                                  TemplateView, UpdateView, DetailView, View)
 
 from .forms import *
 from .models import *
@@ -177,3 +177,11 @@ class StudentView(LoginRequiredMixin, TeacherPermissionsMixin, ListView):
     model = Student
     template_name = 'student.html'
     context_object_name = 'students'
+
+
+class StudentDetailView(LoginRequiredMixin, TeacherPermissionsMixin, DetailView):
+    template_name = 'student_detail.html'
+
+    def get_queryset(self):
+        queryset = User.objects.select_related('student__group').filter(user_status='student')
+        return queryset
