@@ -7,7 +7,10 @@
 {% endblock %}
 
 {% block content %}
-<input type="text" class="form-control" id="search" placeholder="Поиск по названию...">
+
+<div class="" style="display:flex;">
+    <input type="text" class="form-control" id="search" placeholder="Поиск по названию..." style="margin-right: 10px;">
+</div>
 <div class="table-wrapper-scroll-y scrollbar">
     <table id="achievement-table" class="table-scrolls">
         <thead>
@@ -15,7 +18,7 @@
                 <th class="text-center" width="5%">#</th>
                 <th class="text-center name" width="25%">Название</th>
                 <th class="text-center">Описание</td>
-                <th class="text-center" width="20%">Изображение</th>
+                <th class="text-center" width="20%"><i class="fa fa-image"></i> Изображение</i></th>
                 <th class="text-center" width="15%">Действия</th>
             </tr>
         </thead>

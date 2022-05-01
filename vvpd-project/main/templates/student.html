@@ -7,25 +7,44 @@
 {% endblock %}
 
 {% block content %}
-<input type="text" class="form-control" id="search" placeholder="Поиск по ФИО...">
+<div class="nav-menu" style="display:flex;">
+    <input type="text" class="form-control" id="search" placeholder="Поиск по ФИО..." style="margin-right: 13px;">
+    <select id="name-group" class="select-student" style="margin-right: 10px;">
+        <option value="">Группа</option>
+        {% for group in groups %}
+        <option value="{{ group }}">{{ group }}</option>
+        {% endfor %}
+    </select>
+    &nbsp;&nbsp;&nbsp;
+    <select id="year-group" class="select-student">
+        <option value="">Поток</option>
+        {% for year in years %}
+        <option value="{{ year }}">{{ year }}</option>
+        {% endfor %}
+    </select>
+</div>
 <div class="table-wrapper-scroll-y scrollbar">
     <table id="student-table" class="table-scrolls">
         <thead>
             <tr>
                 <th class="text-center" width="3%" data-sort-method='none'>#</th>
-                <th class="text-center name data-sort" width="23%">ФИО <i class="fa fa-link"></i></th>
+                <th class="text-center name data-sort" width="23%"> ФИО</i></th>
                 <th class="text-center data-sort" width="10%">Группа</td>
                 <th class="text-center data-sort" width="10%">Форма обучения</th>
-                <th class="text-center" width="10%" data-sort-method='none'>Ссылка VK <i class="fa fa-link"></i></th>
-                <th class="text-center" width="10%" data-sort-method='none'>Ссылка Git <i class="fa fa-link"></i></th>
+                <th class="text-center" width="10%" data-sort-method='none'><i class="fa fa-link"></i> Ссылка VK</th>
+                <th class="text-center" width="10%" data-sort-method='none'><i class="fa fa-link"></i> Ссылка Git</i>
+                </th>
                 <th class="text-center" width="8%" data-sort-method='none'>Действия</th>
+                <td style="display: none;">Поток</td>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="target">
             {% for student in students %}
             <tr>
                 <td class="text-center">{{ forloop.counter }}</td>
-                <td class="text-center name"><a href="{% url 'student_detail' student.user.id %}">{{ student.user.get_full_name}}</a></td>
+                <td class="text-center name">
+                    <a href="{% url 'student_detail' student.user.id %}">{{student.user.get_full_name}}</a>
+                </td>
                 <td class="text-center">{{ student.group }}</td>
                 <td class="text-center">{{ student.form_of_education }}</td>
                 <td class="text-center">
@@ -42,6 +61,7 @@
                         <span class="fa fa-trash"></span>
                     </a>
                 </td>
+                <td style="display: none;">{{ student.group.year_of_enrollment }}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -70,5 +90,22 @@
     });
 
     new Tablesort(document.getElementById('student-table'));
+
+    filterTable(document.getElementById("target"), {
+        2: document.getElementById("name-group"),
+        7: document.getElementById("year-group"),
+    }
+    );
+    $(document).ready(function () {
+        $('#name-group').select2({
+        });
+
+        $('#year-group').select2({
+        });
+    });
+
+    $(document).on("select2:open", () => {
+        document.querySelector(".select2-container--open .select2-search__field").focus()
+    })
 </script>
 {% endblock %}

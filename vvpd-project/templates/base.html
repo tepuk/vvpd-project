@@ -81,6 +81,9 @@
     <script src="{% static 'js/tablesort.min.js' %}"></script>
     <script src='{% static "js/tablesort.number.js" %}'></script>
 
+    <!-- TableFilter script -->
+    <script src='{% static "js/filtertable.js" %}'></script>
+
     <script>
         const mobileScreen = window.matchMedia("(max-width: 990px )");
         $(document).ready(function () {
@@ -106,5 +109,4 @@
     {% block script %}{% endblock %}
 
 </body>
-
 </html>

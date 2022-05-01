@@ -178,6 +178,14 @@ class StudentView(LoginRequiredMixin, TeacherPermissionsMixin, ListView):
     template_name = 'student.html'
     context_object_name = 'students'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['groups'] = Group.objects.all()
+        context['years'] = set(
+            [x.year_of_enrollment for x in Group.objects.all()]
+        )
+        return context
+
 
 class StudentDetailView(LoginRequiredMixin, TeacherPermissionsMixin, DetailView):
     template_name = 'student_detail.html'
