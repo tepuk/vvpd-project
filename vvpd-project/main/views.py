@@ -261,3 +261,22 @@ class GradeStudentUpdateView(LoginRequiredMixin, TeacherPermissionsMixin, Succes
 
     def get_success_url(self):
         return reverse_lazy('grade_work_edit', kwargs={'student_id': self.kwargs['student_id'], 'pk': self.kwargs['pk']})
+
+
+class StudentDetailGroupView(LoginRequiredMixin, TeacherPermissionsMixin, DetailView):
+    template_name = 'student_detail_group.html'
+
+    def get_queryset(self):
+        queryset = User.objects.select_related(
+            'student__group').filter(user_status='student')
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['works'] = Work.objects.all()
+        context['grades'] = Grade.objects.filter(student__user=context['user'])
+        context['group_pk'] = self.kwargs['group_pk']
+        context['work_grade'] = [x.work for x in Grade.objects.filter(
+            student__user=context['user'])]
+        print(context)
+        return context

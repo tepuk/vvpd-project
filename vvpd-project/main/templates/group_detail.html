@@ -25,7 +25,7 @@
             {% for student in students %}
             <tr>
                 <td class="text-center">{{ forloop.counter }}</td>
-                <td class="text-center name"><a href="{% url 'student_detail' student.user.id %}">{{ student.user.get_full_name}}</a></td>
+                <td class="text-center name"><a href="{% url 'student_detail_group' student.user.id student.group.id %}">{{ student.user.get_full_name}}</a></td>
                 <td class="text-center">{{ student.group }}</td>
                 <td class="text-center">{{ student.form_of_education }}</td>
                 <td class="text-center">
@@ -52,7 +52,7 @@
 </div>
 <br>
 <div class="d-flex justify-content-center mb-4">
-    <a class="btn btn-primary" onclick="javascript:history.back();">Назад</a>
+    <a class="btn btn-primary" href="{% url 'group' %}">Назад</a>
 </div>
 {% endblock %}
 
