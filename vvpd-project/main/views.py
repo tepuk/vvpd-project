@@ -195,6 +195,14 @@ class StudentDetailView(LoginRequiredMixin, TeacherPermissionsMixin, DetailView)
             'student__group').filter(user_status='student')
         return queryset
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['works'] = Work.objects.all()
+        context['grades'] = Grade.objects.filter(student__user=context['user'])
+        context['biba'] = [x.work for x in Grade.objects.filter(
+            student__user=context['user'])]
+        return context
+
 
 class GroupDetailView(LoginRequiredMixin, TeacherPermissionsMixin, DetailView):
     template_name = 'group_detail.html'
@@ -208,3 +216,22 @@ class GroupDetailView(LoginRequiredMixin, TeacherPermissionsMixin, DetailView):
         group = context['group']
         context['students'] = Student.objects.filter(group__name=group)
         return context
+
+
+class GradeWorkCreateView(LoginRequiredMixin, TeacherPermissionsMixin, CreateView):
+    template_name = 'grade_work.html'
+    form_class = GradeWorkCreateForm
+
+    def post(self, request, student_id, work_id, *args, **kwargs):
+        form = GradeWorkCreateForm(self.request.POST)
+        if form.is_valid():
+            forms = form.save(commit=False)
+            forms.student = Student.objects.get(user__id=student_id)
+            forms.work = Work.objects.get(id=work_id)
+            form.save()
+            return self.form_valid(form)
+        else:
+            return self.render_to_response({'form': form})
+
+    def get_success_url(self):
+        return reverse_lazy('student_detail', kwargs={'pk': self.kwargs['student_id']})

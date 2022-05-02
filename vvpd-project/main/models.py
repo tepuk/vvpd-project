@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
-from django.core.validators import RegexValidator
+from django.core.validators import (MaxValueValidator, MinValueValidator,
+                                    RegexValidator)
 from django.db import models
 from django.urls import reverse_lazy
 from PIL import Image
@@ -148,9 +149,11 @@ class GetAchievement(models.Model):
 
 
 class Grade(models.Model):
-    grade = models.PositiveSmallIntegerField(blank=True)
+    grade = models.PositiveSmallIntegerField("Оценка", validators=[
+                                             MaxValueValidator(100), MinValueValidator(0)])
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     work = models.ForeignKey(Work, on_delete=models.CASCADE)
+    coment = models.TextField("Комментарий", blank=True)
 
     class Meta:
         verbose_name = "Оценка"

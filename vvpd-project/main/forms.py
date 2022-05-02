@@ -168,4 +168,15 @@ class WorkCreateForm(forms.ModelForm):
         }
 
 
+class GradeWorkCreateForm(forms.ModelForm):
+    class Meta:
+        model = Grade
+        fields = ['grade', 'coment']
+        widgets = {
+            'coment': forms.Textarea(attrs={
+                'placeholder': 'Комментарий'
+            }),
+        }
+
+
 StudentFormSet = modelformset_factory(Student, form=StudentForm, max_num=1, extra=1)
