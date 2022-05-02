@@ -125,7 +125,7 @@ class StudentCreateView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMess
     form_class = UserCreateForm
     template_name = 'add_student.html'
     success_url = reverse_lazy('student_add')
-    success_message = 'Cтудент усешно добавлен'
+    success_message = 'Cтудент успешно добавлен'
 
     def get_context_data(self, **kwargs):
         data = super(StudentCreateView, self).get_context_data(**kwargs)
@@ -199,7 +199,7 @@ class StudentDetailView(LoginRequiredMixin, TeacherPermissionsMixin, DetailView)
         context = super().get_context_data(**kwargs)
         context['works'] = Work.objects.all()
         context['grades'] = Grade.objects.filter(student__user=context['user'])
-        context['biba'] = [x.work for x in Grade.objects.filter(
+        context['work_grade'] = [x.work for x in Grade.objects.filter(
             student__user=context['user'])]
         return context
 
@@ -228,6 +228,17 @@ class GradeWorkCreateView(LoginRequiredMixin, TeacherPermissionsMixin, CreateVie
             forms = form.save(commit=False)
             forms.student = Student.objects.get(user__id=student_id)
             forms.work = Work.objects.get(id=work_id)
+            if str(forms.date_of_delivery).split()[0] != str(Work.objects.get(id=work_id).dedline).split()[0]:
+                grade_work = (
+                    100 - ((((int((str(forms.date_of_delivery - Work.objects.get(id=work_id).dedline)).split()[0])))//6)*10))
+                if not grade_work:
+                    forms.grade = 0
+                elif grade_work <= 100:
+                    forms.grade = grade_work
+                else:
+                    forms.grade = 100
+            else:
+                forms.grade = 100
             form.save()
             return self.form_valid(form)
         else:

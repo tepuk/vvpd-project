@@ -149,11 +149,14 @@ class GetAchievement(models.Model):
 
 
 class Grade(models.Model):
-    grade = models.PositiveSmallIntegerField("Оценка", validators=[
+    grade = models.PositiveSmallIntegerField("Оценка за дедлайн", validators=[
                                              MaxValueValidator(100), MinValueValidator(0)])
+    grade_for_protection = models.PositiveSmallIntegerField("Оценка за защиту", validators=[
+        MaxValueValidator(100), MinValueValidator(0)])
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     work = models.ForeignKey(Work, on_delete=models.CASCADE)
-    coment = models.TextField("Комментарий", blank=True)
+    comment = models.TextField("Комментарий", blank=True)
+    date_of_delivery = models.DateTimeField("Дата сдачи")
 
     class Meta:
         verbose_name = "Оценка"

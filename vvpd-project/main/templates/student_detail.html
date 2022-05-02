@@ -23,12 +23,12 @@
             {% for work in works %}
             <tr>
                 <td class="text-center" width="5%">{{ forloop.counter }}</td>
-                {% if grades and work in biba %}
+                {% if grades and work in work_grade %}
                 {% for grade in grades %}
                 {% if work.name == grade.work.name %}
                 <td class="text-center name" width="25%">{{ grade.work.name }}</td>
                 <td class="text-center" width="20%">{{ grade.work.dedline }}</td>
-                <td class="text-center" width="20%">{{ grade.grade }}</td>
+                <td class="text-center" width="20%">{{ grade.grade|add:grade.grade_for_protection }}</td>
                 <td class="text-center" width="15%">
                     <a class="update-achievement btn btn-sm btn-primary" href="#">
                         <span class="fa fa-edit"></span>
