@@ -629,6 +629,10 @@ td {
     border: 1px solid #ddd;
     background-color: #fff;
     margin-bottom: 10px;
+    border-radius: .25rem;
+    color: inherit;
+    font-size: inherit;
+
 }
 
 .select-student::-ms-expand {
@@ -638,8 +642,4 @@ td {
 .select-student:focus {
     box-shadow: 0 0 1px 1px #86b7fe;
     outline: none;
-}
-
-.select-student option {
-    font-weight: normal;
 }

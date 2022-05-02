@@ -22,7 +22,7 @@
             {% for group in groups %}
             <tr>
                 <td class="text-center">{{ forloop.counter }}</td>
-                <td class="text-center name" width="25%"><a href="{% url 'group_detail' group.id %}">{{ group.name }}</a></td>
+                <td class="text-center name" width="25%">{{ group.name }}</td>
                 <td class="text-center">{{ group.year_of_enrollment }}</td>
                 <td class="text-center" width="15%">
                     <a class="update-achievement btn btn-sm btn-primary" href="#">

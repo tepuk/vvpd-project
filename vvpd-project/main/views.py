@@ -11,23 +11,23 @@ from .forms import *
 from .models import *
 
 
-class TeacherListView(LoginRequiredMixin, TeacherPermissionsMixin, View):
+class TeacherView(LoginRequiredMixin, TeacherPermissionsMixin, View):
     def get(self, request):
         return render(request, 'teacher_lk.html')
 
 
-class StudentListView(LoginRequiredMixin, StudentPermissionsMixin, View):
+class StudentView(LoginRequiredMixin, StudentPermissionsMixin, View):
     def get(self, request):
         return render(request, 'student_lk.html')
 
 
-class AchievementView(LoginRequiredMixin, TeacherPermissionsMixin, ListView):
+class AchievementListView(LoginRequiredMixin, TeacherPermissionsMixin, ListView):
     model = Achievement
     template_name = 'achievement.html'
     context_object_name = 'achievements'
 
 
-class AchievementAddView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMessageMixin, CreateView):
+class AchievementCreateView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMessageMixin, CreateView):
     form_class = FormAddAchievement
     template_name = 'add_achievement.html'
     success_url = reverse_lazy('achievement_add')
@@ -42,7 +42,7 @@ class AchievementAddView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMes
             return self.render_to_response({'form': form})
 
 
-class AchievementEditView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMessageMixin, UpdateView):
+class AchievementUpdateView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMessageMixin, UpdateView):
     model = Achievement
     form_class = FormUpdateAchievement
     template_name = 'edit_achievement.html'
@@ -52,13 +52,13 @@ class AchievementEditView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMe
         return reverse_lazy('edit_achievement', kwargs={'pk': self.kwargs['pk']})
 
 
-class AchievementDelView(LoginRequiredMixin, TeacherPermissionsMixin, DeleteView):
+class AchievementDeleteView(LoginRequiredMixin, TeacherPermissionsMixin, DeleteView):
     model = Achievement
     template_name = 'del_achievement.html'
     success_url = reverse_lazy('achievement')
 
 
-class AchievementGetView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMessageMixin, CreateView):
+class GetAchievementCreateView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMessageMixin, CreateView):
     form_class = FormGetAchievement
     template_name = 'get_achievement.html'
     success_message = "Достижение '%(achievement)s' было успешно выдано '%(student)s!'"
@@ -75,7 +75,7 @@ class AchievementGetView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMes
             return self.render_to_response({'form': form})
 
 
-class UpdateStudentView(LoginRequiredMixin, StudentPermissionsMixin, SuccessMessageMixin, UpdateView):
+class StudentUpdateView(LoginRequiredMixin, StudentPermissionsMixin, SuccessMessageMixin, UpdateView):
     model = User
     template_name = 'edit_student_lk.html'
     success_message = "Ваш профиль успешно обновлен!"
@@ -111,7 +111,7 @@ class UpdateStudentView(LoginRequiredMixin, StudentPermissionsMixin, SuccessMess
         return super().form_valid(form)
 
 
-class UpdateTeacherView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMessageMixin, UpdateView):
+class TeacherUpdateView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMessageMixin, UpdateView):
     model = User
     template_name = 'edit_teacher_lk.html'
     success_message = "Ваш профиль успешно обновлен!"
@@ -161,19 +161,19 @@ class WorkCreateView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMessage
     success_url = reverse_lazy('work_add')
 
 
-class WorkView(LoginRequiredMixin, TeacherPermissionsMixin, ListView):
+class WorkListView(LoginRequiredMixin, TeacherPermissionsMixin, ListView):
     model = Work
     template_name = 'work.html'
     context_object_name = 'works'
 
 
-class GroupView(LoginRequiredMixin, TeacherPermissionsMixin, ListView):
+class GroupListView(LoginRequiredMixin, TeacherPermissionsMixin, ListView):
     model = Group
     template_name = 'group.html'
     context_object_name = 'groups'
 
 
-class StudentView(LoginRequiredMixin, TeacherPermissionsMixin, ListView):
+class StudentListView(LoginRequiredMixin, TeacherPermissionsMixin, ListView):
     model = Student
     template_name = 'student.html'
     context_object_name = 'students'
@@ -201,20 +201,6 @@ class StudentDetailView(LoginRequiredMixin, TeacherPermissionsMixin, DetailView)
         context['grades'] = Grade.objects.filter(student__user=context['user'])
         context['work_grade'] = [x.work for x in Grade.objects.filter(
             student__user=context['user'])]
-        return context
-
-
-class GroupDetailView(LoginRequiredMixin, TeacherPermissionsMixin, DetailView):
-    template_name = 'group_detail.html'
-
-    def get_queryset(self):
-        queryset = Group.objects.all()
-        return queryset
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        group = context['group']
-        context['students'] = Student.objects.filter(group__name=group)
         return context
 
 
@@ -248,7 +234,7 @@ class GradeWorkCreateView(LoginRequiredMixin, TeacherPermissionsMixin, CreateVie
         return reverse_lazy('student_detail', kwargs={'pk': self.kwargs['student_id']})
 
 
-class GradeStudentUpdateView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMessageMixin, UpdateView):
+class GradeWorkUpdateView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMessageMixin, UpdateView):
     model = Grade
     template_name = 'update_student_grade.html'
     success_message = "Оценка за практическую работу успешно обновлена!"
@@ -261,22 +247,3 @@ class GradeStudentUpdateView(LoginRequiredMixin, TeacherPermissionsMixin, Succes
 
     def get_success_url(self):
         return reverse_lazy('grade_work_edit', kwargs={'student_id': self.kwargs['student_id'], 'pk': self.kwargs['pk']})
-
-
-class StudentDetailGroupView(LoginRequiredMixin, TeacherPermissionsMixin, DetailView):
-    template_name = 'student_detail_group.html'
-
-    def get_queryset(self):
-        queryset = User.objects.select_related(
-            'student__group').filter(user_status='student')
-        return queryset
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['works'] = Work.objects.all()
-        context['grades'] = Grade.objects.filter(student__user=context['user'])
-        context['group_pk'] = self.kwargs['group_pk']
-        context['work_grade'] = [x.work for x in Grade.objects.filter(
-            student__user=context['user'])]
-        print(context)
-        return context
