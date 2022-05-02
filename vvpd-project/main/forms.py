@@ -171,7 +171,21 @@ class WorkCreateForm(forms.ModelForm):
 class GradeWorkCreateForm(forms.ModelForm):
     class Meta:
         model = Grade
-        fields = ['grade_for_protection', 'comment', 'date_of_delivery']
+        fields = ['grade_for_protection', 'comment']
+        widgets = {
+            'comment': forms.Textarea(attrs={
+                'placeholder': 'Комментарий'
+            }),
+            'date_of_delivery': forms.DateInput(attrs={
+                'type': 'datetime-local'
+            }),
+        }
+
+
+class GradeUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Grade
+        fields = ['grade', 'grade_for_protection', 'comment']
         widgets = {
             'comment': forms.Textarea(attrs={
                 'placeholder': 'Комментарий'

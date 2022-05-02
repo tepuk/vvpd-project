@@ -246,3 +246,13 @@ class GradeWorkCreateView(LoginRequiredMixin, TeacherPermissionsMixin, CreateVie
 
     def get_success_url(self):
         return reverse_lazy('student_detail', kwargs={'pk': self.kwargs['student_id']})
+
+
+class GradeStudentUpdateView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMessageMixin, UpdateView):
+    model = Grade
+    template_name = 'update_student_grade.html'
+    success_message = "Оценка за практическую работу успешно обновлена!"
+    form_class = GradeUpdateForm
+
+    def get_success_url(self):
+        return reverse_lazy('grade_work_edit', kwargs={'student_id': self.kwargs['student_id'], 'pk': self.kwargs['pk']})

@@ -30,7 +30,7 @@
                 <td class="text-center" width="20%">{{ grade.work.dedline }}</td>
                 <td class="text-center" width="20%">{{ grade.grade|add:grade.grade_for_protection }}</td>
                 <td class="text-center" width="15%">
-                    <a class="update-achievement btn btn-sm btn-primary" href="#">
+                    <a class="update-achievement btn btn-sm btn-primary" href="{% url 'grade_work_edit' user.pk grade.pk %}">
                         <span class="fa fa-edit"></span>
                     </a>
                 </td>

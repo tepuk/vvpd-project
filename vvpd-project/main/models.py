@@ -3,7 +3,9 @@ from django.core.validators import (MaxValueValidator, MinValueValidator,
                                     RegexValidator)
 from django.db import models
 from django.urls import reverse_lazy
+from django.utils import timezone
 from PIL import Image
+
 
 TYPE_USERS = [
     ("student", 'Студент'),
@@ -156,7 +158,7 @@ class Grade(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     work = models.ForeignKey(Work, on_delete=models.CASCADE)
     comment = models.TextField("Комментарий", blank=True)
-    date_of_delivery = models.DateTimeField("Дата сдачи")
+    date_of_delivery = models.DateTimeField("Дата сдачи", default=timezone.now)
 
     class Meta:
         verbose_name = "Оценка"
