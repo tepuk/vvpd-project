@@ -161,5 +161,6 @@ class Grade(models.Model):
     date_of_delivery = models.DateTimeField("Дата сдачи", default=timezone.now)
 
     class Meta:
+        unique_together = ('student', 'work')
         verbose_name = "Оценка"
         verbose_name_plural = "Оценки"
