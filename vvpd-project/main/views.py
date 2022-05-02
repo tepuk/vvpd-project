@@ -254,5 +254,10 @@ class GradeStudentUpdateView(LoginRequiredMixin, TeacherPermissionsMixin, Succes
     success_message = "Оценка за практическую работу успешно обновлена!"
     form_class = GradeUpdateForm
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['student_id'] = self.kwargs['student_id']
+        return context
+
     def get_success_url(self):
         return reverse_lazy('grade_work_edit', kwargs={'student_id': self.kwargs['student_id'], 'pk': self.kwargs['pk']})
