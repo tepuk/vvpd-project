@@ -196,4 +196,11 @@ class GradeUpdateForm(forms.ModelForm):
         }
 
 
-StudentFormSet = modelformset_factory(Student, form=StudentForm, max_num=1, extra=1)
+class WorkUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Work
+        fields = ['name', 'description', 'dedline']
+
+
+StudentFormSet = modelformset_factory(
+    Student, form=StudentForm, max_num=1, extra=1)

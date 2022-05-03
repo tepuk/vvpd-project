@@ -247,3 +247,19 @@ class GradeWorkUpdateView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMe
 
     def get_success_url(self):
         return reverse_lazy('grade_work_edit', kwargs={'student_id': self.kwargs['student_id'], 'pk': self.kwargs['pk']})
+
+
+class WorkUpdateView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMessageMixin, UpdateView):
+    model = Work
+    form_class = WorkUpdateForm
+    template_name = 'work_update.html'
+    success_message = "Практическая работа успешно обновлена!"
+
+    def get_success_url(self):
+        return reverse_lazy('update_work', kwargs={'pk': self.kwargs['pk']})
+
+
+class WorkDeleteView(LoginRequiredMixin, TeacherPermissionsMixin, SuccessMessageMixin, DeleteView):
+    model = Work
+    template_name = 'work_delete.html'
+    success_url = reverse_lazy('work')

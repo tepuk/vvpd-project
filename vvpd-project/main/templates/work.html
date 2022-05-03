@@ -27,10 +27,10 @@
                 <td>{{ work.description }}</td>
                 <td class="text-center" width="20%">{{ work.dedline }}</td>
                 <td class="text-center" width="15%">
-                    <a class="update-achievement btn btn-sm btn-primary" href="#">
+                    <a class="update-achievement btn btn-sm btn-primary" href="{% url 'update_work' work.id %}">
                         <span class="fa fa-edit"></span>
                     </a>
-                    <a class="delete-achievement btn btn-sm btn-danger" href="#">
+                    <a class="delete-achievement btn btn-sm btn-danger" href="{% url 'delete_work' work.id %}">
                         <span class="fa fa-trash"></span>
                     </a>
                 </td>
