@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Достижения{% endblock %}
 
@@ -8,46 +9,31 @@
 
 {% block content %}
 
-<div class="" style="display:flex;">
-    <input type="text" class="form-control" id="search" placeholder="Поиск по названию..." style="margin-right: 10px;">
-</div>
-<div class="table-wrapper-scroll-y scrollbar">
-    <table id="achievement-table" class="table-scrolls">
-        <thead>
-            <tr>
-                <th class="text-center" width="8%">#</th>
-                <th class="text-center name" width="25%">Название</th>
-                <th class="text-center">Описание</td>
-                <th class="text-center" width="20%"><i class="fa fa-image"></i> Изображение</i></th>
-                <th class="text-center" width="15%">Действия</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for achievement in achievements %}
-            <tr>
-                <td class="text-center" width="5%">{{ forloop.counter }}</td>
-                <td class="text-center name" width="25%">{{ achievement.name }}</td>
-                <td>{{ achievement.description }}</td>
-                <td class="text-center" width="20%"><img src="{{ achievement.image.url }}" width="50%"></td>
-                <td class="text-center" width="15%">
-                    <a class="update-achievement btn btn-sm btn-primary"
-                        href="{% url 'edit_achievement' achievement.pk %}">
-                        <span class="fa fa-edit"></span>
-                    </a>
-                    <a class="delete-achievement btn btn-sm btn-danger"
-                        href="{% url 'del_achievement' achievement.pk %}">
-                        <span class="fa fa-trash"></span>
-                    </a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <div class="error-search text-center mt-3" style="display: none;">
-        <p><i class="fa fa-exclamation-circle"></i>По вашему запросу ничего не найдено</p>
+{% if achievements %}
+<p class="text-center"><i class="fa fa-info-circle" aria-hidden="true"></i> Наведите на иконку, чтобы посмотреть условия получения достижения.</p>
+<div class="item">
+    {% for achievement in achievements %}
+    <div class="iconblock-1">
+        <div title="{{ achievement.description }}" class="icon">
+            <img class="img" src="{{ achievement.image.url }}" />
+        </div>
+        <div>
+            <h3>{{ achievement.name }}</h3>
+        </div>
+        <div class="act-in-achievement">
+            <a class="update-achievement btn btn-sm btn-primary" href="">
+                <span class="fa fa-edit"></span>
+            </a>
+            <a class="delete-achievement btn btn-sm btn-danger" href="">
+                <span class="fa fa-trash"></span>
+            </a>
+        </div>
     </div>
+    {% endfor %}
 </div>
-</div>
+{% else %}
+<p class="text-center">На данный момент не созданно ни одно достижение!</p>
+{% endif %}
 {% endblock %}
 
 {% block script %}

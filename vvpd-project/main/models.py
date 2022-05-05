@@ -95,7 +95,7 @@ class Work(models.Model):
 
 
 class Achievement(models.Model):
-    name = models.CharField("Название достижения", max_length=100, unique=True)
+    name = models.CharField("Название достижения", max_length=70, unique=True)
     description = models.TextField("Описание")
     image = models.ImageField("Изображение", upload_to="static/img/")
 
