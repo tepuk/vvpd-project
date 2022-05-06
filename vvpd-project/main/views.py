@@ -66,14 +66,15 @@ class GetAchievementCreateView(LoginRequiredMixin, TeacherPermissionsMixin, Succ
 
     def post(self, request, *args, **kwargs):
         form = FormGetAchievement(self.request.POST)
+        print(form)
         if form.is_valid():
             form.save()
             return self.form_valid(form)
         else:
             messages.error(
                 request, 'Данное достижение уже выданно этому студенту!')
-            return self.render_to_response({'form': form})
-
+            return self.render_to_response({'form': form,})
+            
 
 class StudentUpdateView(LoginRequiredMixin, StudentPermissionsMixin, SuccessMessageMixin, UpdateView):
     model = User

@@ -17,14 +17,11 @@
 </div>
 {% endfor %}
 
-<div class="col-12 col-md-6 offset-md-3">
     <form class="" method="post">
         {% csrf_token %}
-        <p><i class="fa fa-info-circle" aria-hidden="true"></i> Выберите студента и достижение и нажмите кнопку "Выдать"
-        </p>
-        {{ form.student|as_crispy_field }}
-        <br>
+        <p><i class="fa fa-info-circle" aria-hidden="true"></i> Выберите студента и достижение и нажмите кнопку "Выдать"</p>
         {{ form.achievement|as_crispy_field }}
+        {{ form.student|as_crispy_field }}
         <br>
         <div class="d-flex justify-content-center">
             <button type="submit" class="btn btn-success">Выдать</button>
@@ -32,7 +29,6 @@
             <a class="btn btn-secondary" href="{% url 'achievement' %}" class="">Назад</a>
         </div>
     </form>
-</div>
 {% endblock %}
 
 {% block script %}
