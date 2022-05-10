@@ -66,15 +66,21 @@ class GetAchievementCreateView(LoginRequiredMixin, TeacherPermissionsMixin, Succ
 
     def post(self, request, *args, **kwargs):
         form = FormGetAchievement(self.request.POST)
-        print(form)
+        students = Student.objects.all()
+        groups = Group.objects.all()
         if form.is_valid():
-            form.save()
             return self.form_valid(form)
         else:
             messages.error(
-                request, 'Данное достижение уже выданно этому студенту!')
-            return self.render_to_response({'form': form,})
-            
+                request, 'Что-то пошло не так, попробуйте снова!')
+            return self.render_to_response({'form': form, 'students': students, 'groups': groups})
+
+    def get_context_data(self, **kwargs):
+        data = super(GetAchievementCreateView, self).get_context_data(**kwargs)
+        data['students'] = Student.objects.all()
+        data['groups'] = Group.objects.all()
+        return data
+
 
 class StudentUpdateView(LoginRequiredMixin, StudentPermissionsMixin, SuccessMessageMixin, UpdateView):
     model = User
@@ -215,21 +221,23 @@ class GradeWorkCreateView(LoginRequiredMixin, TeacherPermissionsMixin, CreateVie
             forms = form.save(commit=False)
             forms.student = Student.objects.get(user__id=student_id)
             forms.work = Work.objects.get(id=work_id)
-            if str(forms.date_of_delivery).split()[0] != str(Work.objects.get(id=work_id).dedline).split()[0]:
-                grade_work = (
-                    100 - ((((int((str(forms.date_of_delivery - Work.objects.get(id=work_id).dedline)).split()[0])))//6)*10))
-                if not grade_work:
+
+            # Расчет оценки за дедлайн: 1 нелеля - 10 баллов
+            dedline = Work.objects.get(id=work_id).dedline
+            date_of_delivery = forms.date_of_delivery
+            grade_work = int(str(date_of_delivery - dedline).split()[0])
+
+            if grade_work > 0:
+                if (100 - abs(grade_work // 6) * 10) < 0:
                     forms.grade = 0
-                elif grade_work <= 100:
-                    forms.grade = grade_work
                 else:
-                    forms.grade = 100
+                    forms.grade = (100 - abs(grade_work // 6) * 10)
             else:
                 forms.grade = 100
             form.save()
             return self.form_valid(form)
-        else:
-            return self.render_to_response({'form': form})
+
+        return self.render_to_response({'form': form})
 
     def get_success_url(self):
         return reverse_lazy('student_detail', kwargs={'pk': self.kwargs['student_id']})

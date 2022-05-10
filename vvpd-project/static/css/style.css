@@ -503,7 +503,7 @@ h1,
 
 .scrollbar {
     position: relative;
-    height: 390px;
+    height: 300px;
     overflow: auto;
 }
 
@@ -644,7 +644,7 @@ td {
     outline: none;
 }
 
-.iconblock-1 {
+.iconblock {
     margin: 10px 0;
     transition: all 0.7s ease 0s;
     text-align: center;
@@ -659,7 +659,7 @@ td {
     /* filter: brightness(40%); */
 }
 
-.iconblock-1 h3 {
+.iconblock h3 {
     transition: all 0.7s ease 0s;
     color: #5996dd;
     position: relative;
@@ -686,8 +686,8 @@ td {
 
 
 .act-in-achievement {
-    position:absolute;
-	bottom:0;
+    position: absolute;
+    bottom: 0;
     margin-top: 5px;
     margin-bottom: 10px;
     left: 50%;

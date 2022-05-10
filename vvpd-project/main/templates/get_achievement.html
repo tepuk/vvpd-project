@@ -17,27 +17,77 @@
 </div>
 {% endfor %}
 
-    <form class="" method="post">
-        {% csrf_token %}
-        <p><i class="fa fa-info-circle" aria-hidden="true"></i> Выберите студента и достижение и нажмите кнопку "Выдать"</p>
+<form class="" method="post">
+    {% csrf_token %}
+    <div class="col-12 col-md-10 offset-md-1">
+        <p><i class="fa fa-info-circle" aria-hidden="true"></i> Выберите студента и достижение и нажмите кнопку "Выдать"
+        </p>
         {{ form.achievement|as_crispy_field }}
-        {{ form.student|as_crispy_field }}
         <br>
+        <div class="nav-menu" style="display:flex;">
+            <input type="text" class="form-control" id="search" placeholder="Поиск по ФИО..."
+                style="margin-right: 13px;">
+            <select id="name-group" class="select-student" style="margin-right: 10px;">
+                <option value="">Группа</option>
+                {% for group in groups %}
+                <option value="{{ group }}">{{ group }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="table-wrapper-scroll-y scrollbar">
+            <table id="student-table" class="table-scrolls">
+                <thead>
+                    <tr>
+                        <th class="text-center" width="45px"></th>
+                        <th class="text-center" width="10%" data-sort-method='none'>
+                            #
+                        </th>
+                        <th class="text-center data-sort fio" width="30%">
+                            ФИО
+                        </th>
+                        <th class="text-center data-sort">
+                            Группа
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="target">
+                    {% for student in students %}
+                    <tr>
+                        <td>
+                            <input id="id_student_{{ student.id }}" type="radio" name="student"
+                                value="{{ student.id }}">
+                        </td>
+                        <td class="text-center">
+                            {{ forloop.counter }}
+                        </td>
+                        <td class="text-center fio">
+                            <a href="{% url 'student_detail' student.user.id %}">
+                                {{student.user.get_full_name}}
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            {{ student.group }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <!-- Message if sort not date -->
+            <div class="error-search text-center mt-3" style="display: none;">
+                <p><i class="fa fa-exclamation-circle"></i> По вашему запросу ничего не найдено</p>
+            </div>
+        </div>
         <div class="d-flex justify-content-center">
             <button type="submit" class="btn btn-success">Выдать</button>
             &nbsp;
             <a class="btn btn-secondary" href="{% url 'achievement' %}" class="">Назад</a>
         </div>
-    </form>
+</form>
 {% endblock %}
 
 {% block script %}
 <script>
     $(document).ready(function () {
-        $('#id_student').select2({
-            placeholder: "",
-            width: '100%'
-        });
         $('#id_achievement').select2({
             placeholder: "",
             width: '100%'
@@ -54,5 +104,23 @@
             info_messages[i].setAttribute('style', 'display:none !important');
         }
     }, 3000);
+
+    $("#search").on("keyup", function () {
+        var inputValue = $(this).val().toLowerCase();
+        var count = 0
+        $("#student-table tbody tr").filter(function () {
+            if ($(this).children('.fio').text().toLowerCase().indexOf(inputValue) > -1) count++;
+            $(this).toggle($(this).children('.fio').text().toLowerCase().indexOf(inputValue) > -1)
+        });
+        if (count == 0) {
+            $('.error-search').show();
+        } else {
+            $('.error-search').hide();
+        }
+    });
+
+    filterTable(document.getElementById("target"), {
+        3: document.getElementById("name-group")
+    });
 </script>
 {% endblock %}
